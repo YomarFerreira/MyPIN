@@ -1,0 +1,154 @@
+<Window x:Class="MyPIN.ManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MyPIN — Minhas notas" Width="820" Height="640" MinWidth="620" MinHeight="420"
+        WindowStartupLocation="CenterScreen" Background="#F4F5F7"
+        FontFamily="Segoe UI" FontSize="13">
+    <Grid Margin="14">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210" />
+            <ColumnDefinition Width="14" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ===== Coluna de cadernos ===== -->
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="CADERNOS" FontSize="11" FontWeight="SemiBold" Foreground="#888" Margin="8,4,0,6" />
+            <Button DockPanel.Dock="Bottom" Style="{StaticResource FlatButton}" Margin="0,8,0,0" HorizontalAlignment="Stretch"
+                    Click="NewNotebook_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE710;" FontFamily="{StaticResource IconFont}" FontSize="11" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBlock Text="Novo caderno" />
+                </StackPanel>
+            </Button>
+            <ListBox x:Name="SideList" Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     SelectionChanged="SideList_SelectionChanged" MouseDoubleClick="SideList_MouseDoubleClick"
+                     ContextMenuOpening="SideList_ContextMenuOpening">
+                <ListBox.ContextMenu>
+                    <ContextMenu />
+                </ListBox.ContextMenu>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="Bd" Background="Transparent" CornerRadius="6" Padding="8,7" Margin="0,1">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Bd" Property="Background" Value="#EBECEF" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Bd" Property="Background" Value="#DFE3EA" />
+                                            <Setter Property="FontWeight" Value="SemiBold" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Left" Width="22">
+                                <Ellipse Width="12" Height="12" Fill="{Binding Dot}" Visibility="{Binding DotVisibility}"
+                                         HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Glyph}" FontFamily="{StaticResource IconFont}" FontSize="13"
+                                           VerticalAlignment="Center" Foreground="#555" />
+                            </Grid>
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding Count}" Foreground="#888" FontWeight="Normal" Margin="6,0,0,0" />
+                            <TextBlock DockPanel.Dock="Right" Text="&#xED1A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                       Foreground="#999" VerticalAlignment="Center" Visibility="{Binding HiddenVisibility}"
+                                       ToolTip="As notas deste caderno estão ocultas da tela" />
+                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- ===== Notas ===== -->
+        <DockPanel Grid.Column="2">
+            <Grid DockPanel.Dock="Top" Margin="0,0,0,10">
+                <TextBox x:Name="SearchBox" Padding="30,7,8,7" VerticalContentAlignment="Center"
+                         BorderBrush="#CFCFD4" TextChanged="Search_TextChanged" />
+                <TextBlock Text="&#xE721;" FontFamily="{StaticResource IconFont}" Foreground="#888"
+                           Margin="10,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" />
+                <TextBlock x:Name="SearchHint" Text="Pesquisar nas notas... (Ctrl+F)" Foreground="#999"
+                           Margin="32,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" />
+            </Grid>
+
+            <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
+                <StackPanel x:Name="NotesButtons" Orientation="Horizontal">
+                    <Button Style="{StaticResource PrimaryButton}" Content="Nova nota" Click="New_Click" />
+                    <Button Style="{StaticResource FlatButton}" Content="Abrir" Click="Open_Click" />
+                    <Button Style="{StaticResource FlatButton}" Content="Ocultar" Click="Hide_Click" />
+                    <Button x:Name="MoveButton" Style="{StaticResource FlatButton}" Content="Mover para ▾" Click="Move_Click" />
+                    <Button Style="{StaticResource DangerButton}" Content="Excluir" Click="Delete_Click" />
+                </StackPanel>
+                <StackPanel x:Name="TrashButtons" Orientation="Horizontal" Visibility="Collapsed">
+                    <Button Style="{StaticResource FlatButton}" Content="Restaurar" Click="Restore_Click" />
+                    <Button Style="{StaticResource DangerButton}" Content="Excluir definitivamente" Click="Purge_Click" />
+                    <Button Style="{StaticResource DangerButton}" Content="Esvaziar lixeira" Click="EmptyTrash_Click" />
+                </StackPanel>
+                <Button x:Name="MoreButton" DockPanel.Dock="Right" Style="{StaticResource FlatButton}" Margin="0"
+                        Content="Mais ▾" Click="More_Click" />
+            </DockPanel>
+
+            <TextBlock x:Name="StatusText" DockPanel.Dock="Bottom" Foreground="#777" FontSize="12" Margin="2,6,0,0" />
+
+            <Grid>
+                <ListBox x:Name="List" SelectionMode="Extended" Background="Transparent" BorderThickness="0"
+                         HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         MouseDoubleClick="List_MouseDoubleClick" KeyDown="List_KeyDown"
+                         ContextMenuOpening="List_ContextMenuOpening">
+                    <ListBox.ContextMenu>
+                        <ContextMenu />
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="Bd" BorderThickness="2" BorderBrush="Transparent" CornerRadius="9" Padding="1" Margin="0,2">
+                                            <ContentPresenter />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="BorderBrush" Value="#552563EB" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Bd" Property="BorderBrush" Value="#2563EB" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding BodyBrush}" BorderBrush="{Binding HeaderBrush}" BorderThickness="0,4,0,0"
+                                    CornerRadius="6" Padding="12,8">
+                                <StackPanel>
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Right" Text="{Binding Meta}" Foreground="#88000000" FontSize="11"
+                                                   VerticalAlignment="Center" Margin="8,0,0,0" />
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                                    </DockPanel>
+                                    <TextBlock Text="{Binding Preview}" Foreground="#AA000000" TextWrapping="Wrap"
+                                               TextTrimming="CharacterEllipsis" MaxHeight="38" Margin="0,2,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock x:Name="EmptyText" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Foreground="#999" FontSize="14" Visibility="Collapsed" />
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>MyPIN</AssemblyName>
+    <RootNamespace>MyPIN</RootNamespace>
+    <Product>MyPIN</Product>
+    <Version>1.2.0</Version>
+    <Authors>Yomar</Authors>
+    <!-- Gerado a partir de Services/IconArt.cs (troque lá e gere de novo se mudar o desenho) -->
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Evita conflitos de nomes entre WinForms e WPF (usamos WinForms só para o ícone da bandeja) -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- data da compilação, mostrada na janela Sobre -->
+    <AssemblyMetadata Include="BuildDate" Value="$([System.DateTime]::Now.ToString('yyyy-MM-dd'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Anthropic" Version="13.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Sons dos lembretes (Toque 1, Toque 2, ...): vão junto com o programa -->
+    <None Include="Sons\*.wav" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

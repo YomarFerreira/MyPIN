@@ -1,0 +1,31 @@
+﻿TERMOS DE USO DO MyPIN
+
+Copyright (c) 2026 Yomar. Todos os direitos reservados.
+
+1. USO GRATUITO
+   Você pode instalar e usar o MyPIN gratuitamente, para fins pessoais ou profissionais.
+
+2. O QUE NÃO É PERMITIDO
+   Sem autorização prévia e por escrito do autor, você não pode:
+   - copiar, modificar ou adaptar o programa;
+   - redistribuir, publicar, vender ou alugar o programa, no todo ou em parte;
+   - remover ou alterar avisos de autoria e de direitos autorais.
+
+3. SUAS NOTAS
+   As notas ficam somente no seu computador, na pasta %APPDATA%\MyPIN.
+   Desinstalar o MyPIN não apaga as suas notas.
+   Faça backups (Gerenciar notas > Backup) das informações importantes.
+
+4. INTELIGÊNCIA ARTIFICIAL (OPCIONAL)
+   O recurso de IA só funciona se você configurar a sua própria chave de um provedor de IA.
+   Ao usar esse recurso, o texto enviado à IA é processado pelo provedor escolhido, de acordo
+   com os termos e a política de privacidade dele. Não envie informações que a sua empresa
+   não permita compartilhar com serviços externos.
+
+5. SEM GARANTIA
+   O MyPIN é fornecido "como está", sem garantia de qualquer tipo. O autor não se
+   responsabiliza por perda de dados ou qualquer dano decorrente do uso do programa.
+
+6. COMPONENTES DE TERCEIROS
+   O MyPIN inclui componentes de terceiros que seguem as suas próprias licenças, listadas no
+   arquivo THIRD-PARTY-NOTICES.txt, instalado junto com o programa.

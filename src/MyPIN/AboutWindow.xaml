@@ -1,0 +1,16 @@
+<Window x:Class="MyPIN.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sobre o MyPIN" SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Topmost="True"
+        FontFamily="Segoe UI" FontSize="13" Background="#FAFAFB">
+    <StackPanel Margin="40,26,40,20" MinWidth="220">
+        <Image x:Name="Logo" Width="96" Height="96" HorizontalAlignment="Center"
+               RenderOptions.BitmapScalingMode="HighQuality" />
+        <TextBlock Text="MyPIN" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,10,0,0" Foreground="#222" />
+        <TextBlock Text="By Yomar" FontSize="13" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="#555" />
+        <TextBlock x:Name="VersionText" FontSize="12" HorizontalAlignment="Center" Margin="0,12,0,0" Foreground="#777" />
+        <Button Style="{StaticResource PrimaryButton}" Content="Ok" IsDefault="True" IsCancel="True" MinWidth="80"
+                HorizontalAlignment="Center" Margin="0,18,0,0" Click="Ok_Click" />
+    </StackPanel>
+</Window>

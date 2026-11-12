@@ -1,0 +1,19 @@
+# Saídas de compilação
+bin/
+obj/
+publish/
+dist/
+
+# Dados e prints de teste (têm capturas da tela e cópias de pedidos à IA)
+_testdata/
+
+# Visual Studio / VS Code / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Sistema
+Thumbs.db
+Desktop.ini
